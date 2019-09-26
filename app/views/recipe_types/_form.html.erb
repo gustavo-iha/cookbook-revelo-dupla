@@ -1,0 +1,5 @@
+<%= form_with model: recipe_type, local: true do |f| %>
+  <%= f.label :name, 'Tipo de receita' %>
+  <%= f.text_field :name %>
+  <%= f.submit 'Salvar' %>
+<% end %>

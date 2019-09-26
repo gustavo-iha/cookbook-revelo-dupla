@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
 
     before_action :set_recipe, only: %i[edit show update]
+    before_action :set_recipe_type_select, only: %i[new edit]
 
     def index
         @recipes = Recipe.all
@@ -13,11 +14,12 @@ class RecipesController < ApplicationController
     end
 
     def create
-        @recipe = Recipe.new(params_to_recipe)
+        @recipe = Recipe.new(params_to_recipe_type)
         if @recipe.save()
             redirect_to @recipe
         else
-            flash.now[:validation_error] = 'Você deve informar todos os dados da receita'
+            flash.now[:validation_error] = 'Não foi possível salvar a receita'
+            set_recipe_type_select()
             render :new
         end
     end
@@ -25,10 +27,14 @@ class RecipesController < ApplicationController
     def edit; end
 
     def update
-        # @recipe.attributes = params_to_recipe
-        # @recipe.save()
-        @recipe.update(params_to_recipe)
-        redirect_to @recipe
+        @recipe = Recipe.new(params_to_recipe_type)
+        if @recipe.update(params_to_recipe_type)
+            redirect_to @recipe
+        else
+            flash.now[:validation_error] = 'Não foi possível salvar a receita'
+            set_recipe_type_select()
+            render :new
+        end
     end
 
     private
@@ -36,10 +42,14 @@ class RecipesController < ApplicationController
         @recipe = Recipe.find(params[:id])
     end
 
-    def params_to_recipe
-        params.require('recipe').permit(%i[title recipe_type
+    def params_to_recipe_type
+        params.require('recipe').permit(%i[title recipe_type_id
             cuisine difficulty
             cook_time ingredients
             cook_method])
+    end
+
+    def set_recipe_type_select
+        @recipe_types = RecipeType.all
     end
 end

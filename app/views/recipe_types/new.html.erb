@@ -1,0 +1,5 @@
+<h1>Novo tipo de receita</h1>
+
+<%= render partial: "form", locals: {recipe_type: @recipe_type} %>
+
+<%= link_to 'Voltar', recipe_types_path('index') %>
