@@ -1,14 +1,10 @@
 <h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
 
-<% @recipes.each do |recipe| %>
-    <h1>
-    <%= link_to recipe.title, recipe %>
-    </h1>
-    <ul>
-        <li><%= recipe.recipe_type %></li>
-        <li><%= recipe.cuisine %></li>
-        <li><%= recipe.difficulty %></li>
-        <li><%= recipe.cook_time_text_with_minutes %></li>
-    </ul>
-<% end %>
+<%# <% @recipes.each do |recipe| %>
+    <%# <%= render partial: 'recipe', locals: {recipe: recipe}
+<%# <% end %>
+
+<%= render partial: 'recipe', collection: @recipes %>
+
+<%= link_to "Enviar uma receita", new_recipe_path %>

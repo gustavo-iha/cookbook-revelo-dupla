@@ -53,6 +53,7 @@ end
 group :test do
   gem 'capybara', '>= 2.15'
   gem 'rspec-rails', '~> 3.8'
+  gem 'shoulda-matchers'
 end
 
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Visitor view recipe details' do
   scenario 'successfully' do
     #cria os dados necessários
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: 'Sobremesa',
+    recipe = Recipe.create!(title: 'Bolo de cenoura', recipe_type: 'Sobremesa',
                            cuisine: 'Brasileira', difficulty: 'Médio',
                            cook_time: 60,
                            ingredients: 'Farinha, açucar, cenoura',
