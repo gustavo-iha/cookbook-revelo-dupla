@@ -15,6 +15,6 @@
   <%= f.submit 'Enviar' %>
 <% end %>
 
-<%# <% if recipe.errors.any? %>
-<%#   <p>Você deve informar todos os dados da receita</p>
-<%# <% end %>
+<% recipe.errors.each do |attr, msg| %>
+  <p><%= I18n.t('error_message') + msg %></p>
+<% end %>

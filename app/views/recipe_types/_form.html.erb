@@ -3,3 +3,7 @@
   <%= f.text_field :name %>
   <%= f.submit 'Salvar' %>
 <% end %>
+
+<% recipe_type.errors.full_messages.each do |msg| %>
+  <p><%= msg %></p>
+<% end %>

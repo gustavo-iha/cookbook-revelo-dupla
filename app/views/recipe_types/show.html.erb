@@ -1,0 +1,10 @@
+<h1><%= @recipe_type.name %></h1>
+<h3>Receitas</h3>
+
+<% flash.each do |key, value| %>
+  <%= content_tag :div, value, class: "flash #{key}" %>
+<% end %>
+
+<%= render partial: 'shared/recipe', collection: @recipes %>
+
+<%= link_to 'Voltar', root_path %>

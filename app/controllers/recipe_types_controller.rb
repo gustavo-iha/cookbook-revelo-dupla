@@ -6,7 +6,11 @@ class RecipeTypesController < ApplicationController
         @recipe_types = RecipeType.all
     end
 
-    def show; end
+    def show
+        @recipe_type = RecipeType.find(params[:id])
+        @recipes = @recipe_type.recipes
+        flash[:notice] = "Nenhuma receita encontrada para: #{@recipe_type.name}" unless @recipes.any?
+    end
 
     def new
         @recipe_type = RecipeType.new()
