@@ -5,6 +5,8 @@
   <%= content_tag :div, value, class: "flash #{key}" %>
 <% end %>
 
+<h3><%= notice %></h3>
+
 <%= render partial: 'shared/recipe', collection: @recipes %>
 
 <%= link_to 'Voltar', root_path %>

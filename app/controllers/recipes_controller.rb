@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
     end
 
     def create
-        @recipe = Recipe.new(params_to_recipe_type)
+        @recipe = current_user.recipes.new(params_to_recipe_type)
         if @recipe.save()
             redirect_to @recipe
         else
@@ -52,7 +52,7 @@ class RecipesController < ApplicationController
         params.require('recipe').permit(%i[title recipe_type_id
             cuisine difficulty
             cook_time ingredients
-            cook_method])
+            cook_method user_id])
     end
 
     def set_recipe_type_select
