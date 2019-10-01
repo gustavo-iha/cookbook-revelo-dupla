@@ -4,14 +4,17 @@ feature 'User update recipe' do
   scenario 'successfully' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
-    Recipe.create(title: 'Bolodecenoura', difficulty: 'Médio',
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
                   recipe_type: recipe_type, cuisine: 'Brasileira',
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
 
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
-    click_on 'Bolodecenoura'
+    click_on 'Bolo de cenoura'
     click_on 'Editar'
 
     fill_in 'Título', with: 'Bolo de cenoura'
@@ -33,14 +36,17 @@ feature 'User update recipe' do
 
   scenario 'and must fill in all fields' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
-    Recipe.create(title: 'Bolodecenoura', difficulty: 'Médio',
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
                   recipe_type: recipe_type, cuisine: 'Brasileira',
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
-
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
+    
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
-    click_on 'Bolodecenoura'
+    click_on 'Bolo de cenoura'
     click_on 'Editar'
 
     fill_in 'Título', with: ''
@@ -52,5 +58,64 @@ feature 'User update recipe' do
     click_on 'Enviar'
 
     expect(page).to have_content('Não foi possível salvar a receita')
+  end
+
+  scenario 'when logged off, redirects to log in page' do
+    visit edit_recipe_path(1)
+    
+    expect(current_path).to eq new_user_session_path
+  end
+
+  scenario 'only sees edit button when logged in' do
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    RecipeType.create(name: 'Entrada')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
+                  recipe_type: recipe_type, cuisine: 'Brasileira',
+                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
+
+    # simula a ação do usuário
+    visit root_path
+    click_on 'Bolo de cenoura'
+    
+    expect(page).to_not have_link('Editar')
+  end
+
+  scenario "can't edit a recipe that she does not own" do
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    RecipeType.create(name: 'Entrada')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
+                  recipe_type: recipe_type, cuisine: 'Brasileira',
+                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
+    user_2 = User.create(email: 'gustavo_2@gmail.com', password: '123456')
+    
+    # simula a ação do usuário
+    login_as(user_2, scope: :user)
+    visit recipe_path(recipe)
+    
+    expect(page).to_not have_link('Editar')
+  end
+
+  scenario "can't access recipe's edit page if she does not own it" do
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    RecipeType.create(name: 'Entrada')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
+                  recipe_type: recipe_type, cuisine: 'Brasileira',
+                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
+    user_2 = User.create(email: 'gustavo_2@gmail.com', password: '123456')
+    
+    # simula a ação do usuário
+    login_as(user_2, scope: :user)
+    visit edit_recipe_path(recipe)
+    
+    expect(current_path).to eq root_path
   end
 end

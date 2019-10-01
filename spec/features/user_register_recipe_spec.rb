@@ -11,9 +11,10 @@ feature 'User register recipe' do
     #cria os dados necessários, nesse caso não vamos criar dados no banco
     RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
 
-    user = login
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
     click_on 'Enviar uma receita'
 

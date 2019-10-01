@@ -4,13 +4,15 @@ feature 'Visitor view recipe details' do
   scenario 'successfully' do
     #cria os dados necessários
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
                            cuisine: 'Brasileira', difficulty: 'Médio',
                            cook_time: 60,
                            ingredients: 'Farinha, açucar, cenoura',
-                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
 
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
     click_on recipe.title
 
@@ -29,19 +31,24 @@ feature 'Visitor view recipe details' do
 
   scenario 'and return to recipe list' do
     #cria os dados necessários
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe_type = RecipeType.create(name: 'Sobremesa')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
                            cuisine: 'Brasileira', difficulty: 'Médio',
                            cook_time: 60,
                            ingredients: 'Farinha, açucar, cenoura',
-                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
 
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
     click_on recipe.title
     click_on 'Voltar'
 
     # expectativa da rota atual
     expect(current_path).to eq(root_path)
+  end
+
+  scenario 'only when logged in' do
   end
 end

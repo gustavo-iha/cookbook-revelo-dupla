@@ -14,7 +14,3 @@
   <%= f.text_area :cook_method %>
   <%= f.submit 'Enviar' %>
 <% end %>
-
-<% recipe.errors.each do |attr, msg| %>
-  <p><%= I18n.t('error_message') + msg %></p>
-<% end %>

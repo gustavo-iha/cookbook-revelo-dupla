@@ -12,4 +12,4 @@
 
 <%# <%= link_to "Editar receita", edit_recipe_path(@recipe) %>
 
-<%= link_to 'Editar', edit_recipe_path(@recipe) %> | <%= link_to 'Voltar', root_path %>
+<%= link_to_if(@recipe.owned?(current_user), 'Editar', edit_recipe_path(@recipe)) {} %><br><%= link_to 'Voltar', root_path %>

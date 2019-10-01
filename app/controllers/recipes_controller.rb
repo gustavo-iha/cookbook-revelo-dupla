@@ -1,7 +1,8 @@
 class RecipesController < ApplicationController
-
+    before_action :authenticate_user!, only: %i[new create edit update]
     before_action :set_recipe, only: %i[edit show update]
     before_action :set_recipe_type_select, only: %i[new edit]
+    before_action :authorized_edit, only: %i[ edit update ]
 
     def index
         @recipes = Recipe.all
@@ -25,10 +26,10 @@ class RecipesController < ApplicationController
         end
     end
 
-    def edit; end
+    def edit
+    end
 
     def update
-        @recipe = Recipe.new(params_to_recipe_type)
         if @recipe.update(params_to_recipe_type)
             redirect_to @recipe
         else
@@ -52,10 +53,14 @@ class RecipesController < ApplicationController
         params.require('recipe').permit(%i[title recipe_type_id
             cuisine difficulty
             cook_time ingredients
-            cook_method user_id])
+            cook_method])
     end
 
     def set_recipe_type_select
         @recipe_types = RecipeType.all
+    end
+
+    def authorized_edit
+        redirect_to root_path unless @recipe.owned?(current_user)
     end
 end

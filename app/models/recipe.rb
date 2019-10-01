@@ -8,4 +8,8 @@ class Recipe < ApplicationRecord
     def cook_time_text_with_minutes
         "#{cook_time} minutos"
     end
+
+    def owned?(other_user)
+        user == other_user
+    end
 end
