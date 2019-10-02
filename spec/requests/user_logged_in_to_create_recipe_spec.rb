@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe 'User logged in to create recipe' do
+describe 'User must be logged in' do
   # context 'user' do
   # end
 
   # context 'admin' do
   # end
 
-  it 'post to recipe path' do
+  it 'to create recipe post to recipe path' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     post recipes_path, params: { recipe: {title: 'Bolo de cenoura', recipe_type_id: recipe_type.id,
                                           cuisine: 'Brasileira', difficulty: 'Médio',
@@ -18,7 +18,7 @@ describe 'User logged in to create recipe' do
     expect(response).to redirect_to(new_user_session_path)
   end
 
-  it 'edit to recipe path' do
+  it 'to edit recipe to recipe path' do
     patch recipe_path(1), params: {}
 
     expect(response).to redirect_to(new_user_session_path)
