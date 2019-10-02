@@ -2,6 +2,7 @@ class Recipe < ApplicationRecord
 
     belongs_to :recipe_type
     belongs_to :user
+    has_many :recipe_list_items
 
     validates :title, :cuisine, :difficulty, :cook_time, :ingredients, :cook_method, presence: true
 

@@ -1,0 +1,6 @@
+<%= form_with model: @recipe_list, local: true do |f| %>
+
+  <%= f.label :name, 'Nome da lista' %>
+  <%= f.text_field :name %>
+  <%= f.submit 'Salvar' %>
+<% end %>
