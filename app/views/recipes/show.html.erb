@@ -9,6 +9,7 @@
 <h3>Como Preparar</h3>
 <p><%= @recipe.cook_method %></p>
 <p><%= "Receita enviada por #{@recipe.user.email}"  %></p>
+<p><%= 'Receita pendente' if @recipe.pending? %></p>
 
 <% if user_signed_in? %>
 <p>Pertence às listas: 

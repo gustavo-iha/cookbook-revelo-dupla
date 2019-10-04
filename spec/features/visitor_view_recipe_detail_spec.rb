@@ -9,7 +9,8 @@ feature 'Visitor view recipe details' do
                            cuisine: 'Brasileira', difficulty: 'Médio',
                            cook_time: 60,
                            ingredients: 'Farinha, açucar, cenoura',
-                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user,
+                           status: :approved)
 
     # simula a ação do usuário
     visit root_path
@@ -36,7 +37,8 @@ feature 'Visitor view recipe details' do
                            cuisine: 'Brasileira', difficulty: 'Médio',
                            cook_time: 60,
                            ingredients: 'Farinha, açucar, cenoura',
-                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user,
+                           status: :approved)
 
     # simula a ação do usuário
     login_as(user, scope: :user)
@@ -56,12 +58,28 @@ feature 'Visitor view recipe details' do
                            cuisine: 'Brasileira', difficulty: 'Médio',
                            cook_time: 60,
                            ingredients: 'Farinha, açucar, cenoura',
-                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user,
+                           status: :approved)
 
     # simula a ação do usuário
     visit root_path
     click_on recipe.title
 
     expect(page).not_to have_content('Adicionar a lista')
+  end
+
+  scenario 'can not access pending recipes via url' do
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+                           cuisine: 'Brasileira', difficulty: 'Médio',
+                           cook_time: 60,
+                           ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user,
+                           status: :pending)
+
+    visit recipe_path(recipe)
+
+    expect(current_path).to eq root_path
   end
 end

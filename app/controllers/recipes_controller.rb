@@ -5,12 +5,13 @@ class RecipesController < ApplicationController
     before_action :authorized_edit, only: %i[ edit update ]
 
     def index
-        @recipes = Recipe.all
+        @recipes = Recipe.approved
         @recipe_types = RecipeType.all
     end
 
     def show
         @recipe_lists = current_user.recipe_lists unless current_user.nil?
+        redirect_to root_path if @recipe.pending? && !@recipe.owned?(current_user)
     end
 
     def add_to_list
@@ -56,11 +57,12 @@ class RecipesController < ApplicationController
     end
 
     def search
-        @recipes = Recipe.where('title LIKE ?', "%#{params[:query]}%")
+        @recipes = Recipe.approved.where('title LIKE ?', "%#{params[:query]}%")
         flash[:notice] = "Nenhuma receita encontrada para: #{params[:query]}" unless @recipes.any?
     end
     
     private
+
     def set_recipe
         @recipe = Recipe.find(params[:id])
     end
