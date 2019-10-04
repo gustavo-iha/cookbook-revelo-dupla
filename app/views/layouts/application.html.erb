@@ -11,21 +11,38 @@
 
   <body>    
 
-    <nav>
-      <% if user_signed_in? %>
-        <%= link_to 'Minhas receitas', my_recipes_path %>
-        <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to 'Entrar', new_user_session_path %>
-        <%= link_to 'Sign up', new_user_registration_path %>
-      <% end %>
-    </nav>
+    <!-- Navbar -->
+    <%= render 'layouts/navbar' %>
 
+    <!-- Flashs -->
     <p><%= notice %></p>
     <p><%= alert %></p>
-
-    <%= yield %>
-
     <%= flash[:validation_error] %>
+    
+    <div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <%= render 'layouts/sidebar' %>
+        
+        <!-- Main -->
+        <div class="col-sm-10" id="main">      
+          <% if user_signed_in? %>
+            <%= link_to 'Minhas receitas', my_recipes_path %>
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+          <% else %>
+            <%= link_to 'Entrar', new_user_session_path %>
+            <%= link_to 'Sign up', new_user_registration_path %>
+          <% end %>
+
+
+          <%= yield %>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <%= render 'layouts/footer' %>
+    
   </body>
 </html>

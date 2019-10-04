@@ -1,0 +1,61 @@
+<style> 
+  .side-nav {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+</style>
+ 
+
+<div class="col-sm-2 px-1 bg-dark side-nav custom-scrollbar">  
+    <!-- Logo -->
+      <div class="logo-wrapper waves-light">
+        <a href="#" class="img-fluid allign-center">Social Recipes</a>
+      </div>
+    <!--/. Logo -->
+ 
+    <!-- Side navigation links -->
+    <ul class="collapsible collapsible-accordion">
+      <li><a class="collapsible-header waves-effect arrow-r">Tipo</a>
+        <div class="collapsible-body">
+          <ul>
+            <li><a href="#" class="waves-effect">Submit listing</a>
+            </li>
+            <li><a href="#" class="waves-effect">Registration form</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li><a class="collapsible-header waves-effect arrow-r">Cozinha</a>
+        <div class="collapsible-body">
+          <ul>
+            <li><a href="#" class="waves-effect">For bloggers</a>
+            </li>
+            <li><a href="#" class="waves-effect">For authors</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+</div>
