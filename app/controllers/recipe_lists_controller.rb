@@ -9,11 +9,11 @@ class RecipeListsController < ApplicationController
   end
 
   def create
-    @recipe_list = RecipeList.new(params.require('recipe_list').permit(%i[name]) )
+    @recipe_list = current_user.recipe_lists.new(params.require('recipe_list').permit(%i[name]) )
     if @recipe_list.save()
       redirect_to @recipe_list
-  else
-      # do smth else
-  end
+    else
+        # do smth else
+    end
   end
 end

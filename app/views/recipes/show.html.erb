@@ -10,6 +10,20 @@
 <p><%= @recipe.cook_method %></p>
 <p><%= "Receita enviada por #{@recipe.user.email}"  %></p>
 
+<% if user_signed_in? %>
+<p>Pertence às listas: 
+  <% @recipe_lists.each do |list| %>
+    <%= "#{list.name} " %>
+  <% end %>
+</p>
+
 <%# <%= link_to "Editar receita", edit_recipe_path(@recipe) %>
+
+  <%= form_with local: true, method: 'post', url: add_to_list_recipe_path(@recipe) do |f| %>
+    <%= f.label :recipe_list_id, 'Adicionar a lista' %>
+    <%= f.collection_select :recipe_list_id, @recipe_lists, :id, :name %>
+    <%= f.submit 'Adicionar' %>
+  <% end %>
+<% end %>
 
 <%= link_to_if(@recipe.owned?(current_user), 'Editar', edit_recipe_path(@recipe)) {} %><br><%= link_to 'Voltar', root_path %>

@@ -9,7 +9,23 @@ class RecipesController < ApplicationController
         @recipe_types = RecipeType.all
     end
 
-    def show; end
+    def show
+        @recipe_lists = current_user.recipe_lists unless current_user.nil?
+    end
+
+    def add_to_list
+        recipe_list = RecipeList.find(params[:recipe_list_id])
+
+        if recipe_list.owned? current_user
+            if recipe_list.recipes.find_by(params[:id])
+                flash[:notice] = "Essa receita já pertence à lista #{recipe_list.name}"
+            else
+                recipe_list.recipes << Recipe.find(params[:id])
+            end
+            return redirect_to recipe_path(params[:id])
+        end
+        redirect_to root_path
+    end
 
     def new
         @recipe = Recipe.new()

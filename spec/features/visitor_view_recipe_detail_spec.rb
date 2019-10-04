@@ -12,7 +12,6 @@ feature 'Visitor view recipe details' do
                            cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
 
     # simula a ação do usuário
-    login_as(user, scope: :user)
     visit root_path
     click_on recipe.title
 
@@ -49,6 +48,20 @@ feature 'Visitor view recipe details' do
     expect(current_path).to eq(root_path)
   end
 
-  scenario 'only when logged in' do
+  scenario 'can not see the recipe_list form' do
+    #cria os dados necessários
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+                           cuisine: 'Brasileira', difficulty: 'Médio',
+                           cook_time: 60,
+                           ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user)
+
+    # simula a ação do usuário
+    visit root_path
+    click_on recipe.title
+
+    expect(page).not_to have_content('Adicionar a lista')
   end
 end
