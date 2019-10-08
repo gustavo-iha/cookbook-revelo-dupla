@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   get 'search', to: 'recipes#search', as: :search_recipe
   resources :recipes, only: %i[index show new create edit update] do 
 
-    collection do
-      get 'pending'
-    end
+    get 'pending', on: :collection
 
     member do
       post 'add_to_list', to: 'recipes#add_to_list', as: :add_to_list

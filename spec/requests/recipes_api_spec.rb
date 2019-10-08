@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Recipes API' do
+xdescribe 'Recipes API' do
   context 'index' do
     it 'and view multiple recipes' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')

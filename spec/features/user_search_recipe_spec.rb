@@ -27,7 +27,7 @@ feature 'User search recipe' do
     # simula a ação do usuário (ACT)
     login_as(user, scope: :user)
     visit root_path
-    fill_in 'Pesquisar receita:', with: 'Bolo de cenoura'
+    fill_in placeholder: 'Nome da receita', with: 'Bolo de cenoura'
     click_on 'Pesquisar'
 
     # expectativas do usuário após a ação
@@ -49,7 +49,7 @@ feature 'User search recipe' do
 
     login_as(user, scope: :user)
     visit root_path
-    fill_in 'Pesquisar receita:', with: 'Bolo de chocolate'
+    fill_in placeholder: 'Nome da receita', with: 'Bolo de chocolate'
     click_on 'Pesquisar'
 
     expect(page).to have_content('Nenhuma receita encontrada para: Bolo de chocolate')
@@ -79,7 +79,7 @@ feature 'User search recipe' do
     
     login_as(user, scope: :user)
     visit root_path
-    fill_in 'Pesquisar receita:', with: 'Bolo'
+    fill_in placeholder: 'Nome da receita', with: 'Bolo'
     click_on 'Pesquisar'
 
 

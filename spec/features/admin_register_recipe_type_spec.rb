@@ -2,8 +2,11 @@ require 'rails_helper'
 
 feature 'Admin' do
     scenario 'registers recipe_type' do
+        admin = User.create(email: 'patriciapoki@gmail.com', password: '123456', role: :admin)
+        login_as(admin, scope: :user)
+
         visit root_path
-        click_on 'Admin - tipos de receitas'
+        click_on 'Tipos de Receita'
         click_on 'Novo tipo de receita'
 
         fill_in 'Tipo de receita', with: 'Sobremesa'
@@ -14,8 +17,11 @@ feature 'Admin' do
     end
 
     scenario 'fails to save recipe_type without filling all fields' do
+        admin = User.create(email: 'patriciapoki@gmail.com', password: '123456', role: :admin)
+        login_as(admin, scope: :user)
+
         visit root_path
-        click_on 'Admin - tipos de receitas'
+        click_on 'Tipos de Receita'
         click_on 'Novo tipo de receita'
 
         fill_in 'Tipo de receita', with: ''
@@ -25,10 +31,13 @@ feature 'Admin' do
     end
 
     scenario 'cannot register duplicated recipe_type' do
+        admin = User.create(email: 'patriciapoki@gmail.com', password: '123456', role: :admin)
+        login_as(admin, scope: :user)
+
         RecipeType.create!(name: 'Café da manhã')
 
         visit root_path
-        click_on 'Admin - tipos de receitas'
+        click_on 'Tipos de Receita'
         click_on 'Novo tipo de receita'
 
         fill_in 'Tipo de receita', with: 'Café da manhã'

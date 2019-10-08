@@ -1,21 +1,4 @@
-<h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
-
-
-<div>
-  <ul>
-    <% if user_signed_in? %>
-      <li><%= link_to "Enviar uma receita", new_recipe_path %></li>
-      <li><%= link_to "Nova lista", new_recipe_list_path %></li>
-
-      <% if current_user.admin? %>
-        <li><%= link_to "Receitas pendentes", pending_recipes_path %></li>
-      <% end %>
-    <% end %>
-    
-    <li><%= link_to "Admin - tipos de receitas", recipe_types_path('index') %> </li>
-  </ul>
-</div>
 
 <h3>Filtrar por tipo de receita: </h3>
 <div>
@@ -25,11 +8,6 @@
     <% end %>
   </ul>
 </div>
-<%= form_with(url: search_recipe_path , method: "get", local: true) do %>
-  <%= label_tag(:query, "Pesquisar receita:") %>
-  <%= text_field_tag(:query) %>
-  <%= submit_tag("Pesquisar") %>
-<% end %>
 
 <%= render partial: 'shared/recipe', collection: @recipes %>
 

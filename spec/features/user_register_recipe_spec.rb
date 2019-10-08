@@ -4,7 +4,7 @@ feature 'User register recipe' do
   scenario 'and must be logged in' do
     visit root_path
     
-    expect(page).to_not have_link('Enviar uma receita')
+    expect(page).to_not have_link('Cadastrar Receita')
   end
 
   scenario 'successfully' do
@@ -16,7 +16,7 @@ feature 'User register recipe' do
     # simula a ação do usuário
     login_as(user, scope: :user)
     visit root_path
-    click_on 'Enviar uma receita'
+    click_on 'Cadastrar Receita'
 
     fill_in 'Título', with: 'Tabule'
     select 'Entrada', from: 'Tipo da Receita'
@@ -53,7 +53,7 @@ feature 'User register recipe' do
     fill_in 'Senha', with: '123456'
     click_on 'Log in'
 
-    click_on 'Enviar uma receita'
+    click_on 'Cadastrar Receita'
     
     fill_in 'Título', with: ''
     fill_in 'Cozinha', with: ''

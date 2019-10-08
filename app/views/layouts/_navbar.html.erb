@@ -1,16 +1,27 @@
-<nav class="navbar navbar-expand-md fixed-top navbar-light bg-secondary static-top ">
-  <%= link_to 'Social Recipes', root_path, class: "navbar-brand font-weight-bold"%>
+<nav class="navbar navbar-expand-md fixed-top static-top ">
+  <%= link_to 'CookBook', root_path, class: "navbar-brand nav-link font-weight-bold"%>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav ml-auto ml-md-12">
-      <%= link_to 'Início', root_path, class: "nav-item nav-link active" %>
+    <div class="navbar-nav mr-auto ml-md-12">
       <% if user_signed_in? %>        
-        <%= link_to 'Minhas Receitas', my_recipes_path, class: "nav-item nav-link" %>
+        <%= link_to 'Minhas receitas', my_recipes_path, class: "nav-item nav-link" %>
         <%= link_to 'Cadastrar Receita', new_recipe_path, class: "nav-item nav-link" %>
-        <%= link_to 'Sair', root_path, class: "nav-item nav-link" %>
+        <%= link_to 'Cadastrar Lista', new_recipe_list_path, class: "nav-item nav-link" %>
+        <%= link_to 'Sair', destroy_user_session_path, method: :delete, class: "nav-item nav-link" %>
+        <% if current_user.admin?  %>
+          <%= link_to 'Receitas pendentes', pending_recipes_path, class: "nav-item nav-link" %>
+          <%= link_to 'Tipos de Receita', recipe_types_path('index'), class: "nav-item nav-link" %>
+        <% end %>
       <% else %>
-
+        <%= link_to 'Entrar', new_user_session_path, class: "nav-item nav-link" %>
+        <%= link_to 'Cadastre-se', new_user_registration_path, class: "nav-item nav-link" %>
       <% end %>
     </div>
+
+    <%= form_with(url: search_recipe_path , method: "get", local: true, html: {class: "form-inline my-2 my-lg-0"}) do |f| %>
+      <%#= f.label :query, 'Pesquisar receita:' %>
+      <%= f.text_field :query, placeholder: 'Nome da receita', class: "form-control mr-sm-2" %>
+      <%= f.submit "Pesquisar", class: "btn btn-outline-dark my-2 my-sm-0" %>
+    <% end %>
   </div>
 </nav>
