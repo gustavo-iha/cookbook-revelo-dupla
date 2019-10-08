@@ -6,6 +6,8 @@
 # end
 
 class Api::V1::RecipesController < ActionController::API
+  before_action :permited_status, only: %i[index]
+  before_action :permited_id, only: %i[show]
   def index
     # status_search = params[:status]
     # @recipes = []
@@ -43,6 +45,10 @@ class Api::V1::RecipesController < ActionController::API
   private
 
   def permited_status
-    Recipe.statuses.include?(params[:status])
+    render json: {}, status: :not_found if (!Recipe.statuses.include?(params[:status]) && !params[:status].nil?)
+  end
+
+  def permited_id
+    render json: {}, status: :not_found unless Recipe.find_by(id: params[:id])
   end
 end

@@ -150,6 +150,39 @@ describe 'Recipes API' do
       expect(response.body).not_to include (carrot_cake_recipe.title)
       expect(response.content_type).to eq 'application/json'
     end
+
+    it 'and filters recipes by unknown status' do
+      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+      recipe_type = RecipeType.create!(name: 'Sobremesa')
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :approved)
+      pending_recipe = Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :pending)
+      rejected_recipe = Recipe.create!(title: 'Bolo de rolo', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :rejected)
+
+      get api_v1_recipes_path(status: 'bla')
+
+      json_recipes = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:not_found)
+      expect(json_recipes).to be_empty
+      expect(response.content_type).to eq 'application/json'
+    end
   end
 
   context 'show' do
@@ -174,6 +207,28 @@ describe 'Recipes API' do
       expect(response).to have_http_status(:ok)
       expect(json_recipe[:title]).to eq carrot_cake_recipe.title
       expect(response.body).not_to include (chocolate_cake_recipe.title)
+      expect(response.content_type).to eq 'application/json'
+    end
+
+    it 'and tries to find an unkown recipe id' do
+      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+      recipe_type = RecipeType.create!(name: 'Sobremesa')
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :approved)
+
+      get api_v1_recipe_path(1000)
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:not_found)
       expect(response.content_type).to eq 'application/json'
     end
   end
