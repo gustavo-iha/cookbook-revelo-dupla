@@ -4,8 +4,15 @@ Rails.application.routes.draw do
   get 'my-recipes', to: 'users#my_recipes', as: :my_recipes
   get 'search', to: 'recipes#search', as: :search_recipe
   resources :recipes, only: %i[index show new create edit update] do 
+
+    collection do
+      get 'pending'
+    end
+
     member do
       post 'add_to_list', to: 'recipes#add_to_list', as: :add_to_list
+      patch 'approve'
+      patch 'reject'
     end
   end  
   resources :recipe_types, only: %i[index show new create]

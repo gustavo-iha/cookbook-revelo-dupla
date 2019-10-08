@@ -23,7 +23,8 @@ scenario 'adds recipe to list' do
                   cuisine: 'Brasileira', difficulty: 'Médio',
                   cook_time: 60,
                   ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2)
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
+                  status: :approved)
     RecipeList.create!(name: 'Receitas fabulosas', user: user)
     
     login_as(user, scope: :user)
@@ -43,7 +44,8 @@ scenario 'adds recipe to list' do
                   cuisine: 'Brasileira', difficulty: 'Médio',
                   cook_time: 60,
                   ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2)
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
+                  status: :approved)
     RecipeList.create!(name: 'Receitas fabulosas', user: user)
     
     login_as(user_2, scope: :user)
@@ -61,7 +63,8 @@ scenario 'adds recipe to list' do
                   cuisine: 'Brasileira', difficulty: 'Médio',
                   cook_time: 60,
                   ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2)
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
+                  status: :approved)
     recipe_list = RecipeList.create!(name: 'Receitas fabulosas', user: user)
     
     RecipeListItem.create!(recipe: recipe, recipe_list: recipe_list)
