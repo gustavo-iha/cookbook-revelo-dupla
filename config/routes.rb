@@ -16,7 +16,14 @@ Rails.application.routes.draw do
     end
   end  
   resources :recipe_types, only: %i[index show new create]
-  resources :recipe_lists, only: %i[show new create] 
+  resources :recipe_lists, only: %i[show new create]
+
+  # get 'api/v1/' ...
+  # scope é alternativa
+  namespace :api do
+    namespace :v1 do
+      resources :recipes, only: %i[index show]
+      resources :recipe_types, only: %i[create]
+    end
+  end
 end
-
-

@@ -16,4 +16,9 @@ class Recipe < ApplicationRecord
     def owned?(other_user)
         user == other_user
     end
+
+    def as_json(options = {})
+        super(options.merge(include: { recipe_type: {except: [:id, :created_at, :updated_at]}, user: {except: [:id, :created_at, :updated_at]}}, 
+                            except: [:recipe_type_id, :user_id, :created_at, :updated_at]))
+    end
 end
