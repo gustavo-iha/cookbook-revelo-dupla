@@ -7,6 +7,10 @@
     <% if user_signed_in? %>
       <li><%= link_to "Enviar uma receita", new_recipe_path %></li>
       <li><%= link_to "Nova lista", new_recipe_list_path %></li>
+
+      <% if current_user.admin? %>
+        <li><%= link_to "Receitas pendentes", pending_recipes_path %></li>
+      <% end %>
     <% end %>
     
     <li><%= link_to "Admin - tipos de receitas", recipe_types_path('index') %> </li>

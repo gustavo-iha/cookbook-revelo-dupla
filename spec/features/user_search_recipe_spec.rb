@@ -86,6 +86,6 @@ feature 'User search recipe' do
     expect(page).to have_content('2 resultados encontrados para: Bolo')
     expect(page).to have_css('h1', text: approved_recipe.title)
     expect(page).to have_css('h1', text: another_approved_recipe.title)
-    expect(page).to_not have_css('h1', text: pending.title)
+    expect(page).to_not have_css('h1', text: pending_recipe.title)
   end
 end

@@ -1,8 +1,9 @@
 class RecipesController < ApplicationController
-    before_action :authenticate_user!, only: %i[new create edit update]
+    before_action :authenticate_user!, only: %i[new create edit update pending approve reject]
     before_action :set_recipe, only: %i[edit show update]
     before_action :set_recipe_type_select, only: %i[new edit]
     before_action :authorized_edit, only: %i[ edit update ]
+    before_action :authorized_admin, only: %i[ pending approve reject]
 
     def index
         @recipes = Recipe.approved
@@ -11,7 +12,7 @@ class RecipesController < ApplicationController
 
     def show
         @recipe_lists = current_user.recipe_lists unless current_user.nil?
-        redirect_to root_path if @recipe.pending? && !@recipe.owned?(current_user)
+        redirect_to root_path if !@recipe.approved? && !@recipe.owned?(current_user)
     end
 
     def add_to_list
@@ -61,6 +62,20 @@ class RecipesController < ApplicationController
         flash[:notice] = "Nenhuma receita encontrada para: #{params[:query]}" unless @recipes.any?
     end
     
+    def pending
+        @recipes = Recipe.pending
+    end
+
+    def approve
+        Recipe.find(params[:id]).approved!
+        redirect_to pending_recipes_path
+    end
+
+    def reject
+        Recipe.find(params[:id]).rejected!
+        redirect_to pending_recipes_path
+    end
+
     private
 
     def set_recipe
@@ -80,5 +95,9 @@ class RecipesController < ApplicationController
 
     def authorized_edit
         redirect_to root_path unless @recipe.owned?(current_user)
+    end
+
+    def authorized_admin
+        redirect_to root_path unless current_user.admin?
     end
 end

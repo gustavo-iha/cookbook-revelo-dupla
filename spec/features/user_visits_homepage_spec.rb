@@ -1,7 +1,10 @@
 require 'rails_helper'
 
-feature 'Visitor visit homepage' do
+feature 'User visit homepage' do
   scenario 'successfully' do
+    user = User.create(email: 'gustavo@gmail.com', password: '123456')
+
+    login_as(user, scope: :user)
     visit root_path
 
     expect(page).to have_css('h1', text: 'CookBook')
@@ -21,6 +24,7 @@ feature 'Visitor visit homepage' do
                           status: :approved)
     
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
 
     # expectativas do usuário após a ação
@@ -72,6 +76,7 @@ feature 'Visitor visit homepage' do
                           status: :rejected)
     
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
 
     # expectativas do usuário após a ação
@@ -94,8 +99,10 @@ feature 'Visitor visit homepage' do
 
   scenario 'and cannot see pending recipe list' do
     #cria os dados necessários
+    user = User.create(email: 'gustavo@gmail.com', password: '123456', role: :normal)
         
     # simula a ação do usuário
+    login_as(user, scope: :user)
     visit root_path
 
     # expectativas do usuário após a ação
