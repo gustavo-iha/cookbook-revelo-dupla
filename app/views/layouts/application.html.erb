@@ -7,42 +7,40 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
   </head>
 
   <body>    
 
-    <!-- Navbar -->
+     <!-- Navbar -->
     <%= render 'layouts/navbar' %>
 
     <!-- Flashs -->
     <p><%= notice %></p>
     <p><%= alert %></p>
     <%= flash[:validation_error] %>
+
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <%= render 'layouts/sidebar' %>
     
-    <div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <%= render 'layouts/sidebar' %>
-        
-        <!-- Main -->
-        <div class="col-sm-10" id="main">      
-          <% if user_signed_in? %>
-            <%= link_to 'Minhas receitas', my_recipes_path %>
-            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
-          <% else %>
-            <%= link_to 'Entrar', new_user_session_path %>
-            <%= link_to 'Sign up', new_user_registration_path %>
-          <% end %>
 
-
+      <div id="content-wrapper">
+        <div class="container-fluid">
+          <!-- Main Content -->
           <%= yield %>
+
+          <!-- Lorem Ipsum -->
+          <%#= render 'layouts/lorem_ipsum' %>
+
+          <!-- Sticky Footer -->
+          <%= render 'layouts/footer' %>
         </div>
+      </div>
+      <!-- /.content-wrapper -->
     </div>
-</div>
-
-
-    <!-- Footer -->
-    <%= render 'layouts/footer' %>
-    
+    <!-- /#wrapper -->
   </body>
 </html>
