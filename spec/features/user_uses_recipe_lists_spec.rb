@@ -7,7 +7,7 @@ feature 'User' do
     login_as(user, scope: :user)
     visit root_path
     
-    click_on 'Cadastrar Lista'
+    click_on 'Lista'
     fill_in 'Nome da lista', with: 'Receitas fabulosas'
     click_on 'Salvar'
 

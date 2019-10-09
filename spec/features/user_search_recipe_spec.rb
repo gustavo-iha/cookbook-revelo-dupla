@@ -32,9 +32,9 @@ feature 'User search recipe' do
 
     # expectativas do usuário após a ação
     expect(page).to have_content("1 resultado encontrado para: #{approved_recipe.title}")
-    expect(page).to have_css('h1', text: approved_recipe.title)
+    expect(page).to have_content(approved_recipe.title)
     expect(page).to_not have_content(pending_recipe.ingredients)
-    expect(page).to_not have_css('h1', text: another_approved_recipe.title)
+    expect(page).to_not have_content(another_approved_recipe.title)
   end
 
   scenario 'and does not find' do
@@ -84,8 +84,8 @@ feature 'User search recipe' do
 
 
     expect(page).to have_content('2 resultados encontrados para: Bolo')
-    expect(page).to have_css('h1', text: approved_recipe.title)
-    expect(page).to have_css('h1', text: another_approved_recipe.title)
-    expect(page).to_not have_css('h1', text: pending_recipe.title)
+    expect(page).to have_content(approved_recipe.title)
+    expect(page).to have_content(another_approved_recipe.title)
+    expect(page).to_not have_content(pending_recipe.title)
   end
 end

@@ -1,5 +1,9 @@
-<h1>Tipos de receita</h1>
+<h2>Tipos de receita</h2>
 
-<%= render partial: 'recipe_type', collection: @recipe_types %>
+<div class="divisor"></div>
 
-<%= link_to "Novo tipo de receita", new_recipe_type_path %>
+<ul>
+  <%= render partial: 'recipe_type', collection: @recipe_types %>
+</ul>
+
+<%= link_to "Novo tipo de receita", new_recipe_type_path, class: "btn btn-outline-dark" %>

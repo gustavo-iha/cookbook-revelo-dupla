@@ -1,9 +1,5 @@
-<%= @recipes.each do |recipe| %>
+<h2>Receitas Pendentes:</h2>
 
-  <div id="recipe-<%= recipe.id %>">
-    <%= render partial: "shared/recipe", locals: {recipe: recipe} %>
-    <%= link_to 'Aprovar', approve_recipe_path(recipe), method: :patch, class: 'button'%>
-    <%= link_to 'Rejeitar', reject_recipe_path(recipe), method: :patch, class: 'button'%>
-  </div>
+<div class="divisor"></div>
 
-<% end %>
+<%= render partial: 'shared/recipes_grid', locals: {recipes: @recipes, pending: true} %>

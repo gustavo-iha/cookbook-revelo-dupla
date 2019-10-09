@@ -1,0 +1,11 @@
+<div class="row">
+  <% recipes.each_with_index do |recipe, index| %>  
+    <div d="recipe-<%= recipe.id %>" class="col-md-3">
+      <%= render partial: 'shared/recipe', locals: {recipe: recipe, pending: pending} %>
+    </div>
+
+    <% if index % 4 == 0 && index != 0 %>    
+      <div class="w-100 divisor"></div>
+    <% end %>
+  <% end %>
+</div>

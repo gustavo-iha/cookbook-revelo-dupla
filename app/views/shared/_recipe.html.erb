@@ -1,9 +1,38 @@
-<h1>
-<%= link_to recipe.title, recipe %>
-</h1>
-<ul>
-    <li><%= recipe.recipe_type.name unless recipe.recipe_type.nil? %></li>
-    <li><%= recipe.cuisine %></li>
-    <li><%= recipe.difficulty %></li>
-    <li><%= recipe.cook_time_text_with_minutes %></li>
-</ul>
+<!-- Card Narrower -->
+<div class="card card-cascade">
+
+    <!-- Card image -->
+    <div class="view view-cascade overlay">
+        <%= link_to recipe do %>
+            <%= image_tag "https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg", class: "card-img-top", alt:"Card image cap" %>
+        <% end %>
+    </div>
+
+    <!-- Card content -->
+    <div class="card-body card-body-cascade text-center">
+
+    <!-- Label -->
+    <div class="row">
+        <div class="col">
+            <h5 class="pb-2 pt-1"><i class="fas fa-mitten recipe_icon"></i><%= recipe.recipe_type.name unless recipe.recipe_type.nil? %></h5>
+        </div>
+        <div class="col">
+            <h5 class="pb-2 pt-1"><i class="fas fa-utensils recipe_icon"></i><%= recipe.cuisine %></h5>
+        </div>
+    </div>
+    <!-- Title -->
+    <h4 class="font-weight-bold card-title nav-item"><%= link_to recipe.title, recipe, class: "nav-link" %></h4>
+
+    <% if pending %>
+      <div class="row">
+        <div class="col">
+          <%= link_to 'Aprovar', approve_recipe_path(recipe), method: :patch, class: 'btn btn-outline-dark'%>        
+        </div>
+        <div class="col">
+          <%= link_to 'Rejeitar', reject_recipe_path(recipe), method: :patch, class: 'btn btn-outline-dark'%>
+        </div>
+      </div>
+    <% end %>
+    </div>
+</div>
+<!-- Card Narrower -->

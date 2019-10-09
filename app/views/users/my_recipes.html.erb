@@ -1,5 +1,5 @@
 <h1>CookBook</h1>
 <p>Minhas receitas</p>
 
-<%= render partial: 'shared/recipe', collection: @recipes %>
+<%= render partial: 'shared/recipes_grid', locals: {recipes: @recipes, pending: false} %>
 

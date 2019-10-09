@@ -15,17 +15,17 @@ entry_recipe_type = RecipeType.create(name: 'Entrada')
 dessert_recipe_type = RecipeType.create!(name: 'Sobremesa')
 
 Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-              recipe_type: recipe_type, cuisine: 'Brasileira',
+              recipe_type: dessert_recipe_type, cuisine: 'Brasileira',
               cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
               cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
               user: user, status: :approved)
 Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-              recipe_type: recipe_type, cuisine: 'Brasileira',
+              recipe_type: dessert_recipe_type, cuisine: 'Brasileira',
               cook_time: 50, ingredients: 'Farinha, açucar, chocolate',
               cook_method: 'Cozinhe o chocolate, corte em pedaços pequenos, misture com o restante dos ingredientes',
-              user: user, status: :approved)
+              user: user, status: :rejected)
 Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
-              recipe_type: recipe_type, cuisine: 'Brasileira',
+              recipe_type: dessert_recipe_type, cuisine: 'Brasileira',
               cook_time: 50, ingredients: 'Farinha, açucar, banana',
               cook_method: 'Cozinhe a banana, corte em pedaços pequenos, misture com o restante dos ingredientes',
               user: user, status: :pending)
@@ -33,4 +33,4 @@ Recipe.create!(title: 'Salada', difficulty: 'Médio',
               recipe_type: entry_recipe_type, cuisine: 'Brasileira',
               cook_time: 0, ingredients: 'mato',
               cook_method: 'já está pronto',
-              user: user, status: :rejected)
+              user: user, status: :approved)

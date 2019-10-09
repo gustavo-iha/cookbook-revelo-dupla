@@ -16,7 +16,7 @@ feature 'User register recipe' do
     # simula a ação do usuário
     login_as(user, scope: :user)
     visit root_path
-    click_on 'Cadastrar Receita'
+    click_on 'Receita'
 
     fill_in 'Título', with: 'Tabule'
     select 'Entrada', from: 'Tipo da Receita'
@@ -29,18 +29,18 @@ feature 'User register recipe' do
 
 
     # expectativas
-    expect(page).to have_css('h1', text: 'Tabule')
-    expect(page).to have_css('h3', text: 'Detalhes')
-    expect(page).to have_css('p', text: 'Entrada')
-    expect(page).to have_css('p', text: 'Arabe')
-    expect(page).to have_css('p', text: 'Fácil')
-    expect(page).to have_css('p', text: "45 minutos")
-    expect(page).to have_css('h3', text: 'Ingredientes')
-    expect(page).to have_css('p', text: 'Trigo para quibe, cebola, tomate picado, azeite, salsinha')
-    expect(page).to have_css('h3', text: 'Como Preparar')
-    expect(page).to have_css('p', text:  'Misturar tudo e servir. Adicione limão a gosto.')
-    expect(page).to have_css('p', text: 'Receita enviada por gustavo@gmail.com')
-    expect(page).to have_css('p', text: 'Receita pendente')
+    expect(page).to have_content('Tabule')
+    expect(page).to have_content('Detalhes')
+    expect(page).to have_content('Entrada')
+    expect(page).to have_content('Arabe')
+    expect(page).to have_content('Fácil')
+    expect(page).to have_content('45 minutos')
+    expect(page).to have_content('Ingredientes')
+    expect(page).to have_content('Trigo para quibe, cebola, tomate picado, azeite, salsinha')
+    expect(page).to have_content('Como Preparar')
+    expect(page).to have_content('Misturar tudo e servir. Adicione limão a gosto.')
+    expect(page).to have_content('Receita enviada por gustavo@gmail.com')
+    expect(page).to have_content('Receita pendente')
   end
 
   scenario 'and must fill in all fields' do
@@ -53,7 +53,7 @@ feature 'User register recipe' do
     fill_in 'Senha', with: '123456'
     click_on 'Log in'
 
-    click_on 'Cadastrar Receita'
+    click_on 'Receita'
     
     fill_in 'Título', with: ''
     fill_in 'Cozinha', with: ''

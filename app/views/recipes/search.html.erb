@@ -6,6 +6,10 @@
 
 <%= "#{pluralize(@recipes.length, 'resultado')} #{'encontrado'.pluralize(@recipes.length)} para: #{params[:query]}" %>
 
-<%= render partial: 'shared/recipe', collection: @recipes %>
+<div class="divisor"></div>
 
-<%= link_to 'Voltar', root_path %>
+<%= render partial: 'shared/recipes_grid', locals: {recipes: @recipes, pending: false} %>
+
+<div class="divisor-30"></div>
+
+<%= link_to 'Voltar', root_path, class: "btn btn-outline-dark" %>

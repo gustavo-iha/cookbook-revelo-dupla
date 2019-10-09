@@ -1,13 +1,5 @@
-<p>Bem-vindo ao maior livro de receitas online</p>
+<h2>Todas as Receitas:</h2>
 
-<h3>Filtrar por tipo de receita: </h3>
-<div>
-  <ul>
-    <% @recipe_types.each do |recipe_type| %>
-      <li><%= link_to recipe_type.name, recipe_type%></li>
-    <% end %>
-  </ul>
-</div>
+<div class="divisor"></div>
 
-<%= render partial: 'shared/recipe', collection: @recipes %>
-
+<%= render partial: 'shared/recipes_grid', locals: {recipes: @recipes, pending: false} %>
