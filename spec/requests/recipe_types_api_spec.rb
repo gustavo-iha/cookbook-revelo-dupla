@@ -12,5 +12,16 @@ describe 'Recipe types API' do
       expect(json_recipe_type[:name]).to eq 'entrada'
       expect(response.content_type).to eq 'application/json'
     end
+
+    it 'and failed to create a unkown recipe type' do
+      
+      post api_v1_recipe_types_path
+
+      json_recipe_type = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:not_found)
+      expect(json_recipe_type).to be_empty
+      expect(response.content_type).to eq 'application/json'
+    end
   end
 end
