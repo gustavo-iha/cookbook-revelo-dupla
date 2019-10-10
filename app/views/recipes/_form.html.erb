@@ -1,16 +1,44 @@
-<%= form_with model: recipe, local: true do |f| %>
-  <%= f.text_field :title, placeholder: 'Título' %>
-  <%= f.label :recipe_type_id, 'Tipo da Receita' %>
-  <%= f.collection_select :recipe_type_id, recipe_types, :id, :name %>
-  <%= f.label :cuisine, 'Cozinha' %>
-  <%= f.text_field :cuisine %>
-  <%= f.label :difficulty, 'Dificuldade' %>
-  <%= f.text_field :difficulty %>
-  <%= f.label :cook_time, 'Tempo de Preparo' %>
-  <%= f.number_field :cook_time %>
-  <%= f.label :ingredients, 'Ingredientes' %>
-  <%= f.text_area :ingredients %>
-  <%= f.label :cook_method, 'Como Preparar' %>
-  <%= f.text_area :cook_method %>
-  <%= f.submit 'Enviar' %>
-<% end %>
+ <div class="col-sm-6 offset-sm-3 text-center">
+  <%= form_with model: recipe, local: true, class: 'form-inlin justify-content-center' do |f| %>
+    <div class="form-group">
+    <%= f.label :title, 'Título', class:'sr-only' %>
+    <%= f.text_field :title, placeholder: 'Título', class:"form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :recipe_type_id, 'Tipo da Receita'%>
+    <%= f.collection_select :recipe_type_id, recipe_types, :id, :name, class:"form-control"  %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :cuisine, 'Cozinha', class:'sr-only' %>
+    <%= f.text_field :cuisine, placeholder: 'Cozinha', class:"form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :difficulty, 'Dificuldade', class:'sr-only' %>
+    <%= f.text_field :difficulty, placeholder: 'Dificuldade', class:"form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :cook_time, 'Tempo de Preparo', class:'sr-only' %>
+    <%= f.number_field :cook_time, placeholder: 'Tempo de preparo', class:"form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :ingredients, 'Ingredientes', class:'sr-only' %>
+    <%= f.text_area :ingredients, placeholder: 'Ingredientes', class:"form-control" %>
+    </div>
+
+    <div class="form-group">
+    <%= f.label :cook_method, 'Como Preparar', class:'sr-only' %>
+    <%= f.text_area :cook_method, placeholder: 'Como preparar', class:"form-control" %>
+    </div>
+
+    <%= f.submit 'Enviar', class: 'btn btn-outline-success btn-lg' %>
+
+  <% end %>
+
+  <div class='divisor-30'></div>
+  <%= link_to 'Voltar', root_path, class: 'btn btn-outline-dark' %>
+</div>

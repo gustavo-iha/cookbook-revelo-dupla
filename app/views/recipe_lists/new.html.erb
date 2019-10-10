@@ -1,6 +1,14 @@
-<%= form_with model: @recipe_list, local: true do |f| %>
+<h2>Nova lista</h2>
 
-  <%= f.label :name, 'Nome da lista' %>
-  <%= f.text_field :name %>
-  <%= f.submit 'Salvar' %>
-<% end %>
+<div class='divisor-30'></div>
+
+<div class="col-sm-6 offset-sm-3 text-center  justify-content-center align-self-center">
+  <%= form_with model: @recipe_list, local: true, class: 'form-inlin justify-content-center' do |f| %>
+    <div class="form-group">
+      <%= f.label :name, 'Nome da lista', class:'sr-only'  %>
+      <%= f.text_field :name, placeholder: 'Nome da lista', class:"form-control"%>
+    </div>
+
+    <%= f.submit 'Salvar', class: 'btn btn-outline-success btn-lg' %>
+  <% end %>
+</div>

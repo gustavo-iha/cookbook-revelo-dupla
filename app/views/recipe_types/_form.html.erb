@@ -1,9 +1,18 @@
-<%= form_with model: recipe_type, local: true do |f| %>
-  <%= f.label :name, 'Tipo de receita' %>
-  <%= f.text_field :name %>
-  <%= f.submit 'Salvar' %>
-<% end %>
+<div class="col-sm-6 offset-sm-3 text-center">
+  <%= form_with model: recipe_type, local: true, class: 'form-inlin justify-content-center' do |f| %>
+    <div class="form-group">
+      <%= f.label :name, 'Tipo de receita', class:'sr-only' %>
+      <%= f.text_field :name, placeholder: 'Tipo de receita', class:"form-control" %>
+    </div>
 
-<% recipe_type.errors.full_messages.each do |msg| %>
-  <p><%= msg %></p>
-<% end %>
+    <%= f.submit 'Salvar', class: 'btn btn-outline-success btn-lg' %>
+  <% end %>
+
+  <% recipe_type.errors.full_messages.each do |msg| %>
+    <p><%= msg %></p>
+  <% end %>
+
+  <div class='divisor-30'></div>
+
+  <%= link_to 'Voltar', recipe_types_path('index'), class: 'btn btn-outline-dark' %>
+</div>
