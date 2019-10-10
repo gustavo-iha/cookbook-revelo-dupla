@@ -42,7 +42,7 @@ xdescribe 'Recipes API' do
       expect(response.content_type).to eq 'application/json'
     end
 
-    it 'and filters recipes by status' do
+    it 'and filters recipes by approved status' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
       carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
@@ -152,29 +152,6 @@ xdescribe 'Recipes API' do
     end
 
     it 'and filters recipes by unknown status' do
-      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-      recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      pending_recipe = Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :pending)
-      rejected_recipe = Recipe.create!(title: 'Bolo de rolo', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :rejected)
-
       get api_v1_recipes_path(status: 'bla')
 
       json_recipes = JSON.parse(response.body, symbolize_names: true)
@@ -211,25 +188,112 @@ xdescribe 'Recipes API' do
     end
 
     it 'and tries to find an unkown recipe id' do
-      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-      recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-
       get api_v1_recipe_path(1000)
 
       json_recipe = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:not_found)
+      expect(json_recipe).to be_empty
       expect(response.content_type).to eq 'application/json'
+    end
+  end
+
+  context 'delete' do
+    it 'and deletes a single recipe by id' do
+      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+      recipe_type = RecipeType.create!(name: 'Sobremesa')
+      recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
+                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                    user: user, status: :approved)
+
+      delete api_v1_recipe_path(recipe.id)
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:ok)
+      expect(json_recipe).to be_empty
+      expect(response.content_type).to eq 'application/json'
+    end
+
+    it 'and tries to delete a single recipe by an unkown id' do
+      delete api_v1_recipe_path(1000)
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:not_found)
+      expect(json_recipe).to be_empty
+      expect(response.content_type).to eq 'application/json'
+    end
+  end
+
+  context 'create' do
+    it 'and creates a recipe' do
+      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+      recipe_type = RecipeType.create!(name: 'Sobremesa')
+
+
+      post api_v1_recipes_path, params: { recipe: {title: 'Bolo de cenoura', difficulty: 'Médio',
+                                         recipe_type_id: recipe_type.id, cuisine: 'Brasileira',
+                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                         user_id: user.id}}
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:created)
+      expect(json_recipe[:title]).to eq 'Bolo de cenoura'
+      expect(response.content_type).to eq 'application/json'
+    end
+
+    it 'and fails to create a recipe' do
+      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+
+      post api_v1_recipes_path, params: {title: 'Bolo de cenoura', difficulty: 'Médio', cuisine: 'Brasileira',
+                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                         user_id: user.id}
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_recipe).to be_empty
+      expect(response.content_type).to eq 'application/json'
+    end
+
+    it 'and tries to create a recipe with unkown params' do
+      post api_v1_recipes_path
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_recipe).to be_empty
+      expect(response.content_type).to eq 'application/json'
+    end
+  end
+
+  context 'update' do
+    xit 'and updates a recipe' do
+      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+      recipe_type = RecipeType.create!(name: 'Sobremesa')
+
+
+       api_v1_recipes_path, params: {title: 'Bolo de cenoura', difficulty: 'Médio',
+                                         recipe_type_id: recipe_type.id, cuisine: 'Brasileira',
+                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                         user_id: user.id}
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(:created)
+      expect(json_recipe[:title]).to eq 'Bolo de cenoura'
+      expect(response.content_type).to eq 'application/json'
+    end
+
+    xit 'and tries to update a recipe with unkown params' do
+     
     end
   end
 end
