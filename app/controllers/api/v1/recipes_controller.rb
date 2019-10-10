@@ -7,6 +7,8 @@
 
 class Api::V1::RecipesController < Api::V1::ApiController
   rescue_from ActionController::ParameterMissing, with: :unprocessable_entity
+  rescue_from ActionController::UnpermittedParameters, with: :forbidden
+  before_action :authorize_params, only: %i[update]
   before_action :permited_status, only: %i[index]
   
   # before_action :permited_id, only: %i[show destroy]
@@ -59,15 +61,18 @@ class Api::V1::RecipesController < Api::V1::ApiController
 
   def update
     @recipe = Recipe.find(params[:id])
-
     if @recipe.update!(recipe_params)
-      render json: @recipe, status: :accepted
+      render json: @recipe, status: :ok
     else
       render json: {}, status: :unprocessable_entity
     end
   end
 
   private
+
+  def authorize_params
+    raise ActionController::UnpermittedParameters.new(status: '') if params.require(:recipe)[:status].present?
+  end
 
   def recipe_params
     params.require(:recipe).permit(%i[title recipe_type_id
@@ -77,7 +82,11 @@ class Api::V1::RecipesController < Api::V1::ApiController
   end
 
   def unprocessable_entity
-    render json: {}, status: :unprocessable_entity 
+    render json: {}, status: :unprocessable_entity
+  end
+
+  def forbidden
+    render json: {}, status: :forbidden
   end
 
   def permited_status

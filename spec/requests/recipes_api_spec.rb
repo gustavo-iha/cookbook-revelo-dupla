@@ -274,26 +274,53 @@ describe 'Recipes API' do
   end
 
   context 'update' do
-    xit 'and updates a recipe' do
-      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-      recipe_type = RecipeType.create!(name: 'Sobremesa')
+    before :each do
+      @user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+      @recipe_type = RecipeType.create!(name: 'Sobremesa')
+      @user_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
+                              recipe_type: @recipe_type, cuisine: 'Brasileira',
+                              cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                              cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                              user: @user, status: :approved)
+    end
 
+    it 'user updates a recipe' do
+      patch api_v1_recipe_path(@user_recipe), params: { recipe: { title: 'O Melhor Bolo de Cenoura', difficulty: 'Alta' }}
 
-       api_v1_recipes_path, params: {title: 'Bolo de cenoura', difficulty: 'Médio',
-                                         recipe_type_id: recipe_type.id, cuisine: 'Brasileira',
-                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                                         user_id: user.id}
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(response.content_type).to eq 'application/json'
+      expect(response).to have_http_status(:ok)
+      expect(json_recipe[:title]).to eq 'O Melhor Bolo de Cenoura'
+      expect(json_recipe[:difficulty]).to eq 'Alta'
+      expect(json_recipe[:cuisine]).to eq @user_recipe[:cuisine]
+      expect(json_recipe[:cook_time]).to eq @user_recipe[:cook_time]
+      expect(json_recipe[:ingredients]).to eq @user_recipe[:ingredients]
+      expect(json_recipe[:cook_method]).to eq @user_recipe[:cook_method]
+      expect(json_recipe[:status]).to eq @user_recipe[:status]
+    end
+
+    it 'user tries to update a recipe with incorrect params' do
+      patch api_v1_recipe_path(@user_recipe), params: { recipex: { title: 'O Melhor Bolo de Cenoura' }}
 
       json_recipe = JSON.parse(response.body, symbolize_names: true)
 
-      expect(response).to have_http_status(:created)
-      expect(json_recipe[:title]).to eq 'Bolo de cenoura'
       expect(response.content_type).to eq 'application/json'
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json_recipe).to be_empty
     end
 
-    xit 'and tries to update a recipe with unkown params' do
-     
+    it "user tries to update a recipe's status" do
+      patch api_v1_recipe_path(@user_recipe), params: { recipe: { status: :rejected }}
+
+      json_recipe = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.content_type).to eq 'application/json'
+      expect(response).to have_http_status(:forbidden)
+      expect(json_recipe).to be_empty
+    end
+
+    xit "user tries to update a recipe's ownership" do
     end
   end
 end
