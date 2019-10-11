@@ -8,7 +8,7 @@ class RecipeTypesController < ApplicationController
 
     def show
         @recipe_type = RecipeType.find(params[:id])
-        @recipes = @recipe_type.recipes
+        @recipes = @recipe_type.recipes.approved
         flash[:notice] = "Nenhuma receita encontrada para: #{@recipe_type.name}" unless @recipes.any?
     end
 

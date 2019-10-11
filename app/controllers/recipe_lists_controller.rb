@@ -1,7 +1,13 @@
 class RecipeListsController < ApplicationController
   
+  def index
+    @recipe_lists = RecipeList.all
+  end
+
   def show
     @recipe_list = RecipeList.find(params[:id])
+    @recipes = @recipe_list.recipes
+    flash[:notice] = "Nenhuma receita encontrada para: #{@recipe_list.name}" unless @recipes.any?
   end
   
   def new

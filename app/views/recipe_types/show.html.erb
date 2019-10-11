@@ -1,12 +1,10 @@
-<h2>Tipo de Receita: <%= @recipe_type.name %></h2>
+<h2>Tipo de receita: <%= @recipe_type.name %></h2>
 
 <div class="divisor"></div>
 
 <% flash.each do |key, value| %>
   <%= content_tag :div, value, class: "flash #{key}" %>
 <% end %>
-
-<h3><%= notice %></h3>
 
 <%= render partial: 'shared/recipes_grid', locals: {recipes: @recipes, pending: false} %>
 

@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
     belongs_to :user
     has_many :recipe_list_items
     has_many :recipe_lists, through: :recipe_list_items
+    has_one_attached :photo
 
     enum status: { pending: 0, approved: 1, rejected: 2}
 

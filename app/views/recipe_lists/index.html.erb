@@ -1,0 +1,9 @@
+<h2>Minhas listas:</h2>
+
+<div class='divisor'></div>
+
+<ul>
+  <% @recipe_lists.each do |list|%>
+    <li><%= link_to list.name, list, class: "nav-item nav-link" %></li>
+  <% end %>
+</ul>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-xdescribe 'Recipes API' do
+describe 'Recipes API' do
   context 'index' do
     it 'and view multiple recipes' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
@@ -270,30 +270,6 @@ xdescribe 'Recipes API' do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_recipe).to be_empty
       expect(response.content_type).to eq 'application/json'
-    end
-  end
-
-  context 'update' do
-    xit 'and updates a recipe' do
-      user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-      recipe_type = RecipeType.create!(name: 'Sobremesa')
-
-
-       api_v1_recipes_path, params: {title: 'Bolo de cenoura', difficulty: 'Médio',
-                                         recipe_type_id: recipe_type.id, cuisine: 'Brasileira',
-                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                                         user_id: user.id}
-
-      json_recipe = JSON.parse(response.body, symbolize_names: true)
-
-      expect(response).to have_http_status(:created)
-      expect(json_recipe[:title]).to eq 'Bolo de cenoura'
-      expect(response.content_type).to eq 'application/json'
-    end
-
-    xit 'and tries to update a recipe with unkown params' do
-     
     end
   end
 end

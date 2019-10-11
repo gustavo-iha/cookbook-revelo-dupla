@@ -30,7 +30,6 @@ feature 'User register recipe' do
 
     # expectativas
     expect(page).to have_content('Tabule')
-    expect(page).to have_content('Detalhes')
     expect(page).to have_content('Entrada')
     expect(page).to have_content('Arabe')
     expect(page).to have_content('Fácil')

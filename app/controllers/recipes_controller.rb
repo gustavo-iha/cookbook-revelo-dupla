@@ -11,7 +11,8 @@ class RecipesController < ApplicationController
     end
 
     def show
-        @recipe_lists = current_user.recipe_lists unless current_user.nil?
+        @recipe_lists = @recipe.recipe_lists
+        @recipe_lists_select = current_user.recipe_lists unless current_user.nil?
         redirect_to root_path if !@recipe.approved? && !@recipe.owned?(current_user)
     end
 
@@ -84,9 +85,9 @@ class RecipesController < ApplicationController
 
     def params_to_recipe_type
         params.require('recipe').permit(%i[title recipe_type_id
-            cuisine difficulty
-            cook_time ingredients
-            cook_method])
+                                          cuisine difficulty
+                                          cook_time ingredients
+                                          cook_method photo])
     end
 
     def set_recipe_type_select

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end  
   resources :recipe_types, only: %i[index show new create]
-  resources :recipe_lists, only: %i[show new create]
+  resources :recipe_lists, only: %i[index show new create]
 
   # get 'api/v1/' ...
   # scope é alternativa

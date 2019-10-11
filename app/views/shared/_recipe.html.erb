@@ -1,10 +1,14 @@
 <!-- Card Narrower -->
-<div class="card card-cascade">
+<div id="recipe-<%= recipe.id %>" class="card card-cascade h-100">
 
     <!-- Card image -->
     <div class="view view-cascade overlay">
         <%= link_to recipe do %>
+          <% if recipe.photo.attached? %>
+            <%= image_tag recipe.photo, class: "card-img-top", alt:"Card image cap" %>
+          <% else %>            
             <%= image_tag "https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg", class: "card-img-top", alt:"Card image cap" %>
+          <% end %>
         <% end %>
     </div>
 
@@ -29,7 +33,7 @@
           <%= link_to 'Aprovar', approve_recipe_path(recipe), method: :patch, class: 'btn btn-outline-success'%>        
         </div>
         <div class="col">
-          <%= link_to 'Rejeitar', reject_recipe_path(recipe), method: :patch, class: 'btn btn-outline-dark'%>
+          <%= link_to 'Rejeitar', reject_recipe_path(recipe), method: :patch, class: 'btn btn-outline-danger'%>
         </div>
       </div>
     <% end %>

@@ -25,7 +25,9 @@ feature 'User' do
 
     login_as(user, scope: :user)
     visit root_path
-    click_on 'Minhas receitas'
+    within '#mine_nav_option' do
+      click_on 'Receitas'
+    end
 
     expect(page).to have_content('Minhas receitas')
     expect(page).to have_content('Bolo de cenoura')

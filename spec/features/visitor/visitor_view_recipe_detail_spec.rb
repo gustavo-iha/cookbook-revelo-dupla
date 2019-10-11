@@ -17,16 +17,15 @@ feature 'Visitor view recipe details' do
     click_on recipe.title
 
     # expectativas do usuário após a ação
-    expect(page).to have_css('h1', text: recipe.title)
-    expect(page).to have_css('h3', text: 'Detalhes')
-    expect(page).to have_css('p', text: recipe.recipe_type.name)
-    expect(page).to have_css('p', text: recipe.cuisine)
-    expect(page).to have_css('p', text: recipe.difficulty)
-    expect(page).to have_css('p', text: "#{recipe.cook_time} minutos")
-    expect(page).to have_css('h3', text: 'Ingredientes')
-    expect(page).to have_css('p', text: recipe.ingredients)
-    expect(page).to have_css('h3', text: 'Como Preparar')
-    expect(page).to have_css('p', text: recipe.cook_method)
+    expect(page).to have_content(recipe.title)
+    expect(page).to have_content(recipe.recipe_type.name)
+    expect(page).to have_content(recipe.cuisine)
+    expect(page).to have_content(recipe.difficulty)
+    expect(page).to have_content("#{recipe.cook_time} minutos")
+    expect(page).to have_content('Ingredientes')
+    expect(page).to have_content(recipe.ingredients)
+    expect(page).to have_content('Como Preparar')
+    expect(page).to have_content(recipe.cook_method)
   end
 
   scenario 'and return to recipe list' do

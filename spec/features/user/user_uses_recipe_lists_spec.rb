@@ -14,8 +14,7 @@ feature 'User' do
     expect(page).to have_content('Receitas fabulosas')
   end
 
-
-scenario 'adds recipe to list' do
+  scenario 'adds recipe to list' do
     user = User.create!(email: 'gustavo@gmail.com', password: '123456')
     user_2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
     recipe_type = RecipeType.create!(name: 'Sobremesa')
@@ -33,7 +32,36 @@ scenario 'adds recipe to list' do
     select 'Receitas fabulosas', from: 'Adicionar a lista'
     click_on 'Adicionar'
 
-    expect(page).to have_content('Pertence às listas: Receitas fabulosas')
+    expect(page).to have_content('Pertence à(s) lista(s): Receitas fabulosas')
+  end
+
+  scenario 'adds recipe to list and only it' do
+    user = User.create!(email: 'gustavo@gmail.com', password: '123456')
+    user_2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
+    recipe_type = RecipeType.create!(name: 'Sobremesa')
+    added_recipe = Recipe.create!(title: 'Bolo de cenoura', recipe_type: recipe_type,
+                  cuisine: 'Brasileira', difficulty: 'Médio',
+                  cook_time: 60,
+                  ingredients: 'Farinha, açucar, cenoura',
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
+                  status: :approved)
+    normal_recipe = Recipe.create!(title: 'Bolo de chocolate', recipe_type: recipe_type,
+                    cuisine: 'Brasileira', difficulty: 'Médio',
+                    cook_time: 60,
+                    ingredients: 'Farinha, açucar, cenoura',
+                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
+                    status: :approved)
+    RecipeList.create!(name: 'Receitas fabulosas', user: user)
+    
+    login_as(user, scope: :user)
+    visit root_path
+    click_on added_recipe.title
+    select 'Receitas fabulosas', from: 'Adicionar a lista'
+    click_on 'Adicionar'
+
+    visit recipe_path(normal_recipe)
+
+    expect(page).not_to have_content('Pertence às listas: Receitas fabulosas')
   end
 
   scenario 'can not add recipe to another user list' do
