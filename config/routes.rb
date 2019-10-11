@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'recipes#index'
   get 'my-recipes', to: 'users#my_recipes', as: :my_recipes
   get 'search', to: 'recipes#search', as: :search_recipe
-  resources :recipes, only: %i[index show new create edit update] do 
+  resources :recipes do 
 
     get 'pending', on: :collection
 

@@ -54,7 +54,16 @@
 
   <div class='divisor'></div>
 
-  <%= link_to_if(@recipe.owned?(current_user), 'Editar', edit_recipe_path(@recipe), class: 'btn btn-outline-dark') {} %>
+  <% if @recipe.owned?(current_user) %>
+    <div class="row">
+      <div class="col">
+        <%= link_to 'Editar', edit_recipe_path(@recipe), class: 'btn btn-outline-info'  %>
+      </div>
+      <div class="col">
+        <%= link_to 'Deletar', recipe_path(@recipe), method: :delete, class: 'btn btn-outline-danger'  %>
+      </div>
+    </div>
+  <% end %>
 
   <div class='divisor-30'></div>
 

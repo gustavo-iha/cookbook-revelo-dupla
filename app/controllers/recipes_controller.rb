@@ -1,8 +1,8 @@
 class RecipesController < ApplicationController
     before_action :authenticate_user!, only: %i[new create edit update pending approve reject]
-    before_action :set_recipe, only: %i[edit show update]
+    before_action :set_recipe, only: %i[edit show update destroy]
     before_action :set_recipe_type_select, only: %i[new edit]
-    before_action :authorized_edit, only: %i[ edit update ]
+    before_action :authorized_edit, only: %i[ edit update destroy]
     before_action :authorized_admin, only: %i[ pending approve reject]
 
     def index
@@ -43,6 +43,11 @@ class RecipesController < ApplicationController
             set_recipe_type_select()
             render :new
         end
+    end
+
+    def destroy
+        @recipe.destroy
+        redirect_to my_recipes_path
     end
 
     def edit
