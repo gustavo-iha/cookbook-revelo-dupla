@@ -26,9 +26,7 @@
         <div class="container-fluid">
 
           <!-- Flashs -->
-          <p><%= notice %></p>
-          <p><%= alert %></p>
-          <%= flash[:validation_error] %>
+          <%= render 'layouts/flashs' %>
           
           <!-- Main Content -->
           <%= yield %>

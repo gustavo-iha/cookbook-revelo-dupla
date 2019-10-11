@@ -52,7 +52,9 @@
     <% end %>
   <% end %>
 
-  <%= link_to_if(@recipe.owned?(current_user), 'Editar', edit_recipe_path(@recipe)) {} %>
+  <div class='divisor'></div>
+
+  <%= link_to_if(@recipe.owned?(current_user), 'Editar', edit_recipe_path(@recipe), class: 'btn btn-outline-dark') {} %>
 
   <div class='divisor-30'></div>
 
