@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User visits recipe type' do
   scenario 'and sees recipes' do
-    #cria os dados necessários, nesse caso não vamos criar dados no banco (ARRANGE)
+    # cria os dados necessários, nesse caso não vamos criar dados no banco (ARRANGE)
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe_type = RecipeType.create(name: 'Sobremesa')
     another_recipe_type = RecipeType.create(name: 'Café da Manhã')
@@ -36,7 +36,7 @@ feature 'User visits recipe type' do
                   ingredients: 'Umas paradas',
                   cook_method: 'Sei lá', user: user,
                   status: :approved)
-    
+
     # simula a ação do usuário (ACT)
     login_as(user, scope: :user)
     visit root_path

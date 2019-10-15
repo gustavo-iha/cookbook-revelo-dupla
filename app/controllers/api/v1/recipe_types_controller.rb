@@ -6,6 +6,7 @@ class Api::V1::RecipeTypesController < ActionController::API
   end
 
   private
+
   def recipe_type_params
     params.permit(:name)
   end

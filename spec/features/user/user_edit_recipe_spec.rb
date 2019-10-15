@@ -10,7 +10,7 @@ feature 'User tries to update a recipe' do
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
                   user: user, status: :approved)
-                  
+
     # simula a ação do usuário
     login_as(user, scope: :user)
     visit root_path
@@ -42,13 +42,13 @@ feature 'User tries to update a recipe' do
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
                   user: user, status: :approved)
-                  
+
     # simula a ação do usuário
     login_as(user, scope: :user)
     visit root_path
     click_on 'Bolo de cenoura'
     click_on 'Editar'
-    
+
     fill_in 'Título', with: ''
     fill_in 'Cozinha', with: ''
     fill_in 'Dificuldade', with: ''
@@ -62,7 +62,7 @@ feature 'User tries to update a recipe' do
 
   scenario 'andm when logged off, redirects to log in page' do
     visit edit_recipe_path(1)
-    
+
     expect(current_path).to eq new_user_session_path
   end
 
@@ -79,7 +79,7 @@ feature 'User tries to update a recipe' do
     # simula a ação do usuário
     visit root_path
     click_on 'Bolo de cenoura'
-    
+
     expect(page).to_not have_link('Editar')
   end
 
@@ -88,16 +88,16 @@ feature 'User tries to update a recipe' do
     RecipeType.create(name: 'Entrada')
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :approved)
-    user_2 = User.create(email: 'gustavo_2@gmail.com', password: '123456')
-    
+                           recipe_type: recipe_type, cuisine: 'Brasileira',
+                           cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                           user: user, status: :approved)
+    user2 = User.create(email: 'gustavo_2@gmail.com', password: '123456')
+
     # simula a ação do usuário
-    login_as(user_2, scope: :user)
+    login_as(user2, scope: :user)
     visit recipe_path(recipe)
-    
+
     expect(page).to_not have_link('Editar')
   end
 
@@ -106,16 +106,16 @@ feature 'User tries to update a recipe' do
     RecipeType.create(name: 'Entrada')
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :approved)
-    user_2 = User.create(email: 'gustavo_2@gmail.com', password: '123456')
-    
+                           recipe_type: recipe_type, cuisine: 'Brasileira',
+                           cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                           user: user, status: :approved)
+    user2 = User.create(email: 'gustavo_2@gmail.com', password: '123456')
+
     # simula a ação do usuário
-    login_as(user_2, scope: :user)
+    login_as(user2, scope: :user)
     visit edit_recipe_path(recipe)
-    
+
     expect(current_path).to eq root_path
   end
 end

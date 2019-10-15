@@ -3,8 +3,7 @@ require 'rails_helper'
 describe 'Recipe types API' do
   context 'create' do
     it 'and create a new recipe type' do
-      
-      post api_v1_recipe_types_path, params: {name: 'entrada'}
+      post api_v1_recipe_types_path, params: { name: 'entrada' }
 
       json_recipe_type = JSON.parse(response.body, symbolize_names: true)
 
@@ -14,7 +13,6 @@ describe 'Recipe types API' do
     end
 
     it 'and failed to create a unkown recipe type' do
-      
       post api_v1_recipe_types_path
 
       json_recipe_type = JSON.parse(response.body, symbolize_names: true)

@@ -5,26 +5,47 @@ describe 'Recipes API' do
     it 'and view multiple recipes' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      pending_recipe = Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :pending)
-      rejected_recipe = Recipe.create!(title: 'Bolo de rolo', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :rejected)
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura',
+                                          difficulty: 'Médio',
+                                          recipe_type: recipe_type,
+                                          cuisine: 'Brasileira',
+                                          cook_time: 50,
+                                          ingredients: 'Farinha, açucar, cenoura',
+                                          cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                          user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate',
+                                             difficulty: 'Médio',
+                                             recipe_type: recipe_type,
+                                             cuisine: 'Brasileira',
+                                             cook_time: 50,
+                                             ingredients: 'Farinha, açucar, cenoura',
+                                             cook_method: 'Cozinhe a cenoura, '\
+                                             'corte em pedaços pequenos, '\
+                                             'misture com o restante dos '\
+                                             'ingredientes',
+                                             user: user, status: :approved)
+      pending_recipe = Recipe.create!(title: 'Bolo de banana',
+                                      difficulty: 'Médio',
+                                      recipe_type: recipe_type,
+                                      cuisine: 'Brasileira',
+                                      cook_time: 50,
+                                      ingredients: 'Farinha, açucar, cenoura',
+                                      cook_method: 'Cozinhe a cenoura, corte '\
+                                      'em pedaços pequenos, misture com o '\
+                                      'restante dos ingredientes',
+                                      user: user, status: :pending)
+      rejected_recipe = Recipe.create!(title: 'Bolo de rolo',
+                                       difficulty: 'Médio',
+                                       recipe_type: recipe_type,
+                                       cuisine: 'Brasileira',
+                                       cook_time: 50,
+                                       ingredients: 'Farinha, açucar, cenoura',
+                                       cook_method: 'Cozinhe a cenoura, '\
+                                       'corte em pedaços pequenos, misture '\
+                                       'com o restante dos ingredientes',
+                                       user: user, status: :rejected)
 
       get api_v1_recipes_path
 
@@ -37,34 +58,54 @@ describe 'Recipes API' do
       expect(json_recipes[0][:title]).to eq carrot_cake_recipe.title
       expect(json_recipes[1][:title]).to eq chocolate_cake_recipe.title
       expect(json_recipes[1][:recipe_type][:name]).to eq chocolate_cake_recipe.recipe_type.name
-      expect(response.body).to include (pending_recipe.title)
-      expect(response.body).to include (rejected_recipe.title)
+      expect(response.body).to include pending_recipe.title
+      expect(response.body).to include rejected_recipe.title
       expect(response.content_type).to eq 'application/json'
     end
 
     it 'and filters recipes by approved status' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      pending_recipe = Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :pending)
-      rejected_recipe = Recipe.create!(title: 'Bolo de rolo', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :rejected)
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura',
+                                          difficulty: 'Médio',
+                                          recipe_type: recipe_type,
+                                          cuisine: 'Brasileira',
+                                          cook_time: 50,
+                                          ingredients: 'Farinha, açucar, cenoura',
+                                          cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                          user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate',
+                                             difficulty: 'Médio',
+                                             recipe_type: recipe_type,
+                                             cuisine: 'Brasileira',
+                                             cook_time: 50,
+                                             ingredients: 'Farinha, açucar, cenoura',
+                                             cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                             user: user, status: :approved)
+      pending_recipe = Recipe.create!(title: 'Bolo de banana',
+                                      difficulty: 'Médio',
+                                      recipe_type: recipe_type,
+                                      cuisine: 'Brasileira',
+                                      cook_time: 50,
+                                      ingredients: 'Farinha, açucar, cenoura',
+                                      cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                      user: user, status: :pending)
+      rejected_recipe = Recipe.create!(title: 'Bolo de rolo',
+                                       difficulty: 'Médio',
+                                       recipe_type: recipe_type,
+                                       cuisine: 'Brasileira',
+                                       cook_time: 50,
+                                       ingredients: 'Farinha, açucar, cenoura',
+                                       cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                       user: user, status: :rejected)
 
       get api_v1_recipes_path(status: 'approved')
 
@@ -74,34 +115,54 @@ describe 'Recipes API' do
       expect(json_recipes[0][:title]).to eq carrot_cake_recipe.title
       expect(json_recipes[1][:title]).to eq chocolate_cake_recipe.title
       expect(json_recipes[1][:recipe_type][:name]).to eq chocolate_cake_recipe.recipe_type.name
-      expect(response.body).not_to include (pending_recipe.title)
-      expect(response.body).not_to include (rejected_recipe.title)
+      expect(response.body).not_to include pending_recipe.title
+      expect(response.body).not_to include rejected_recipe.title
       expect(response.content_type).to eq 'application/json'
     end
 
     it 'and filters recipes by pending status' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      pending_recipe = Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :pending)
-      rejected_recipe = Recipe.create!(title: 'Bolo de rolo', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :rejected)
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura',
+                                          difficulty: 'Médio',
+                                          recipe_type: recipe_type,
+                                          cuisine: 'Brasileira',
+                                          cook_time: 50,
+                                          ingredients: 'Farinha, açucar, cenoura',
+                                          cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                          user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate',
+                                             difficulty: 'Médio',
+                                             recipe_type: recipe_type,
+                                             cuisine: 'Brasileira',
+                                             cook_time: 50,
+                                             ingredients: 'Farinha, açucar, cenoura',
+                                             cook_method: 'Cozinhe a cenoura, '\
+                                            'corte em pedaços pequenos, '\
+                                            'misture com o restante dos ingredientes',
+                                             user: user, status: :approved)
+      pending_recipe = Recipe.create!(title: 'Bolo de banana',
+                                      difficulty: 'Médio',
+                                      recipe_type: recipe_type,
+                                      cuisine: 'Brasileira',
+                                      cook_time: 50,
+                                      ingredients: 'Farinha, açucar, cenoura',
+                                      cook_method: 'Cozinhe a cenoura, '\
+                                      'corte em pedaços pequenos, '\
+                                      'misture com o restante dos ingredientes',
+                                      user: user, status: :pending)
+      rejected_recipe = Recipe.create!(title: 'Bolo de rolo',
+                                       difficulty: 'Médio',
+                                       recipe_type: recipe_type,
+                                       cuisine: 'Brasileira',
+                                       cook_time: 50,
+                                       ingredients: 'Farinha, açucar, cenoura',
+                                       cook_method: 'Cozinhe a cenoura, corte '\
+                                      'em pedaços pequenos, misture com o '\
+                                      'restante dos ingredientes',
+                                       user: user, status: :rejected)
 
       get api_v1_recipes_path(status: 'pending')
 
@@ -109,35 +170,55 @@ describe 'Recipes API' do
 
       expect(response).to have_http_status(:ok)
       expect(json_recipes[0][:title]).to eq pending_recipe.title
-      expect(response.body).not_to include (carrot_cake_recipe.title)
-      expect(response.body).not_to include (chocolate_cake_recipe.title)
-      expect(response.body).not_to include (rejected_recipe.title)
+      expect(response.body).not_to include carrot_cake_recipe.title
+      expect(response.body).not_to include chocolate_cake_recipe.title
+      expect(response.body).not_to include rejected_recipe.title
       expect(response.content_type).to eq 'application/json'
     end
 
     it 'and filters recipes by rejected status' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      pending_recipe = Recipe.create!(title: 'Bolo de banana', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :pending)
-      rejected_recipe = Recipe.create!(title: 'Bolo de rolo', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :rejected)
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura',
+                                          difficulty: 'Médio',
+                                          recipe_type: recipe_type,
+                                          cuisine: 'Brasileira',
+                                          cook_time: 50,
+                                          ingredients: 'Farinha, açucar, cenoura',
+                                          cook_method: 'Cozinhe a cenoura, '\
+                                         'corte em pedaços pequenos, misture '\
+                                         'com o restante dos ingredientes',
+                                          user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate',
+                                             difficulty: 'Médio',
+                                             recipe_type: recipe_type,
+                                             cuisine: 'Brasileira',
+                                             cook_time: 50,
+                                             ingredients: 'Farinha, açucar, cenoura',
+                                             cook_method: 'Cozinhe a cenoura, '\
+                                             'corte em pedaços pequenos, '\
+                                             'misture com o restante dos ingredientes',
+                                             user: user, status: :approved)
+      pending_recipe = Recipe.create!(title: 'Bolo de banana',
+                                      difficulty: 'Médio',
+                                      recipe_type: recipe_type,
+                                      cuisine: 'Brasileira',
+                                      cook_time: 50,
+                                      ingredients: 'Farinha, açucar, cenoura',
+                                      cook_method: 'Cozinhe a cenoura, '\
+                                      'corte em pedaços pequenos, misture '\
+                                      'com o restante dos ingredientes',
+                                      user: user, status: :pending)
+      rejected_recipe = Recipe.create!(title: 'Bolo de rolo',
+                                       difficulty: 'Médio',
+                                       recipe_type: recipe_type,
+                                       cuisine: 'Brasileira',
+                                       cook_time: 50,
+                                       ingredients: 'Farinha, açucar, cenoura',
+                                       cook_method: 'Cozinhe a cenoura, corte '\
+                                       'em pedaços pequenos, misture com o '\
+                                       'restante dos ingredientes',
+                                       user: user, status: :rejected)
 
       get api_v1_recipes_path(status: 'rejected')
 
@@ -145,9 +226,9 @@ describe 'Recipes API' do
 
       expect(response).to have_http_status(:ok)
       expect(json_recipes[0][:title]).to eq rejected_recipe.title
-      expect(response.body).not_to include (pending_recipe.title)
-      expect(response.body).not_to include (chocolate_cake_recipe.title)
-      expect(response.body).not_to include (carrot_cake_recipe.title)
+      expect(response.body).not_to include pending_recipe.title
+      expect(response.body).not_to include chocolate_cake_recipe.title
+      expect(response.body).not_to include carrot_cake_recipe.title
       expect(response.content_type).to eq 'application/json'
     end
 
@@ -166,16 +247,26 @@ describe 'Recipes API' do
     it 'and views a single recipe by id' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
-      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
-      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
+      carrot_cake_recipe = Recipe.create!(title: 'Bolo de cenoura',
+                                          difficulty: 'Médio',
+                                          recipe_type: recipe_type,
+                                          cuisine: 'Brasileira',
+                                          cook_time: 50,
+                                          ingredients: 'Farinha, açucar, cenoura',
+                                          cook_method: 'Cozinhe a cenoura, '\
+                                          'corte em pedaços pequenos, misture '\
+                                          'com o restante dos ingredientes',
+                                          user: user, status: :approved)
+      chocolate_cake_recipe = Recipe.create!(title: 'Bolo de chocolate',
+                                             difficulty: 'Médio',
+                                             recipe_type: recipe_type,
+                                             cuisine: 'Brasileira',
+                                             cook_time: 50,
+                                             ingredients: 'Farinha, açucar, cenoura',
+                                             cook_method: 'Cozinhe a cenoura, '\
+                                             'corte em pedaços pequenos, '\
+                                             'misture com o restante dos ingredientes',
+                                             user: user, status: :approved)
 
       get api_v1_recipe_path(carrot_cake_recipe.id)
 
@@ -183,7 +274,7 @@ describe 'Recipes API' do
 
       expect(response).to have_http_status(:ok)
       expect(json_recipe[:title]).to eq carrot_cake_recipe.title
-      expect(response.body).not_to include (chocolate_cake_recipe.title)
+      expect(response.body).not_to include chocolate_cake_recipe.title
       expect(response.content_type).to eq 'application/json'
     end
 
@@ -203,10 +294,12 @@ describe 'Recipes API' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
       recipe = Recipe.create!(title: 'Bolo de cenoura', difficulty: 'Médio',
-                    recipe_type: recipe_type, cuisine: 'Brasileira',
-                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                    user: user, status: :approved)
+                              recipe_type: recipe_type, cuisine: 'Brasileira',
+                              cook_time: 50,
+                              ingredients: 'Farinha, açucar, cenoura',
+                              cook_method: 'Cozinhe a cenoura, corte em '\
+                              'pedaços pequenos, misture com o restante dos ingredientes',
+                              user: user, status: :approved)
 
       delete api_v1_recipe_path(recipe.id)
 
@@ -233,12 +326,14 @@ describe 'Recipes API' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
       recipe_type = RecipeType.create!(name: 'Sobremesa')
 
-
-      post api_v1_recipes_path, params: { recipe: {title: 'Bolo de cenoura', difficulty: 'Médio',
-                                         recipe_type_id: recipe_type.id, cuisine: 'Brasileira',
-                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                                         user_id: user.id}}
+      post api_v1_recipes_path, params: { recipe: { title: 'Bolo de cenoura',
+                                                    difficulty: 'Médio',
+                                                    recipe_type_id: recipe_type.id,
+                                                    cuisine: 'Brasileira',
+                                                    cook_time: 50,
+                                                    ingredients: 'Farinha, açucar, cenoura',
+                                                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                                    user_id: user.id } }
 
       json_recipe = JSON.parse(response.body, symbolize_names: true)
 
@@ -250,10 +345,13 @@ describe 'Recipes API' do
     it 'and fails to create a recipe' do
       user = User.create!(email: 'gustavo@gmail.com', password: '123456')
 
-      post api_v1_recipes_path, params: {title: 'Bolo de cenoura', difficulty: 'Médio', cuisine: 'Brasileira',
-                                         cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                                         cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                                         user_id: user.id}
+      post api_v1_recipes_path, params: { title: 'Bolo de cenoura',
+                                          difficulty: 'Médio',
+                                          cuisine: 'Brasileira',
+                                          cook_time: 50,
+                                          ingredients: 'Farinha, açucar, cenoura',
+                                          cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                          user_id: user.id }
 
       json_recipe = JSON.parse(response.body, symbolize_names: true)
 

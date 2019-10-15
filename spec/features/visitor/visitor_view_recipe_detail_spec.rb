@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Visitor view recipe details' do
   scenario 'successfully' do
-    #cria os dados necessários
+    # cria os dados necessários
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
@@ -29,7 +29,7 @@ feature 'Visitor view recipe details' do
   end
 
   scenario 'and return to recipe list' do
-    #cria os dados necessários
+    # cria os dados necessários
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe_type = RecipeType.create(name: 'Sobremesa')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
@@ -50,7 +50,7 @@ feature 'Visitor view recipe details' do
   end
 
   scenario 'can not see the recipe_list form' do
-    #cria os dados necessários
+    # cria os dados necessários
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,

@@ -3,12 +3,12 @@ require 'rails_helper'
 feature 'User register recipe' do
   scenario 'and must be logged in' do
     visit root_path
-    
+
     expect(page).to_not have_link('Cadastrar Receita')
   end
 
   scenario 'successfully' do
-    #cria os dados necessários, nesse caso não vamos criar dados no banco
+    # cria os dados necessários, nesse caso não vamos criar dados no banco
     RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
     user = User.create(email: 'gustavo@gmail.com', password: '123456')
@@ -26,7 +26,6 @@ feature 'User register recipe' do
     fill_in 'Ingredientes', with: 'Trigo para quibe, cebola, tomate picado, azeite, salsinha'
     fill_in 'Como Preparar', with: 'Misturar tudo e servir. Adicione limão a gosto.'
     click_on 'Enviar'
-
 
     # expectativas
     expect(page).to have_content('Tabule')
@@ -53,7 +52,7 @@ feature 'User register recipe' do
     click_on 'Log in'
 
     click_on 'Receita'
-    
+
     fill_in 'Título', with: ''
     fill_in 'Cozinha', with: ''
     fill_in 'Dificuldade', with: ''

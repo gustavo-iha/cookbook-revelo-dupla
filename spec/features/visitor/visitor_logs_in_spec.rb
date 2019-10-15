@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Visitor' do
   scenario 'logs in' do
-    user = User.create!(email: 'stefano@revelo.com.br', password: '12345678')
+    User.create!(email: 'stefano@revelo.com.br', password: '12345678')
 
     visit root_path
     click_on 'Entrar'
@@ -17,7 +17,7 @@ feature 'Visitor' do
   end
 
   scenario 'logs in and out' do
-    user = User.create!(email: 'stefano@revelo.com.br', password: '12345678')
+    User.create!(email: 'stefano@revelo.com.br', password: '12345678')
 
     visit root_path
     click_on 'Entrar'
@@ -30,7 +30,6 @@ feature 'Visitor' do
     expect(page).to_not have_link('Sair')
     expect(page).to have_link('Cadastre-se')
     expect(page).to have_content('Até a próxima...')
-
   end
 
   scenario 'signs up' do

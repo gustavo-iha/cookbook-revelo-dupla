@@ -3,10 +3,10 @@ require 'rails_helper'
 feature 'User' do
   scenario 'creates new list' do
     user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-    
+
     login_as(user, scope: :user)
     visit root_path
-    
+
     click_on 'Lista'
     fill_in 'Nome da lista', with: 'Receitas fabulosas'
     click_on 'Salvar'
@@ -16,16 +16,16 @@ feature 'User' do
 
   scenario 'adds recipe to list' do
     user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-    user_2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
+    user2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
     recipe_type = RecipeType.create!(name: 'Sobremesa')
     Recipe.create!(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                  cuisine: 'Brasileira', difficulty: 'Médio',
-                  cook_time: 60,
-                  ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
-                  status: :approved)
+                   cuisine: 'Brasileira', difficulty: 'Médio',
+                   cook_time: 60,
+                   ingredients: 'Farinha, açucar, cenoura',
+                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user2,
+                   status: :approved)
     RecipeList.create!(name: 'Receitas fabulosas', user: user)
-    
+
     login_as(user, scope: :user)
     visit root_path
     click_on 'Bolo de cenoura'
@@ -37,22 +37,22 @@ feature 'User' do
 
   scenario 'adds recipe to list and only it' do
     user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-    user_2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
+    user2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
     recipe_type = RecipeType.create!(name: 'Sobremesa')
     added_recipe = Recipe.create!(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                  cuisine: 'Brasileira', difficulty: 'Médio',
-                  cook_time: 60,
-                  ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
-                  status: :approved)
+                                  cuisine: 'Brasileira', difficulty: 'Médio',
+                                  cook_time: 60,
+                                  ingredients: 'Farinha, açucar, cenoura',
+                                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user2,
+                                  status: :approved)
     normal_recipe = Recipe.create!(title: 'Bolo de chocolate', recipe_type: recipe_type,
-                    cuisine: 'Brasileira', difficulty: 'Médio',
-                    cook_time: 60,
-                    ingredients: 'Farinha, açucar, cenoura',
-                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
-                    status: :approved)
+                                   cuisine: 'Brasileira', difficulty: 'Médio',
+                                   cook_time: 60,
+                                   ingredients: 'Farinha, açucar, cenoura',
+                                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user2,
+                                   status: :approved)
     RecipeList.create!(name: 'Receitas fabulosas', user: user)
-    
+
     login_as(user, scope: :user)
     visit root_path
     click_on added_recipe.title
@@ -66,35 +66,35 @@ feature 'User' do
 
   scenario 'can not add recipe to another user list' do
     user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-    user_2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
+    user2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
     recipe_type = RecipeType.create!(name: 'Sobremesa')
     Recipe.create!(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                  cuisine: 'Brasileira', difficulty: 'Médio',
-                  cook_time: 60,
-                  ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
-                  status: :approved)
+                   cuisine: 'Brasileira', difficulty: 'Médio',
+                   cook_time: 60,
+                   ingredients: 'Farinha, açucar, cenoura',
+                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user2,
+                   status: :approved)
     RecipeList.create!(name: 'Receitas fabulosas', user: user)
-    
-    login_as(user_2, scope: :user)
+
+    login_as(user2, scope: :user)
     visit root_path
     click_on 'Bolo de cenoura'
-    
+
     expect(page).not_to have_content('Receitas fabulosas')
   end
 
   scenario 'can not add the same recipe to a recipe_list twice' do
     user = User.create!(email: 'gustavo@gmail.com', password: '123456')
-    user_2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
+    user2 = User.create!(email: 'gustavo2@gmail.com', password: '123456')
     recipe_type = RecipeType.create!(name: 'Sobremesa')
     recipe = Recipe.create!(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                  cuisine: 'Brasileira', difficulty: 'Médio',
-                  cook_time: 60,
-                  ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user_2,
-                  status: :approved)
+                            cuisine: 'Brasileira', difficulty: 'Médio',
+                            cook_time: 60,
+                            ingredients: 'Farinha, açucar, cenoura',
+                            cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes', user: user2,
+                            status: :approved)
     recipe_list = RecipeList.create!(name: 'Receitas fabulosas', user: user)
-    
+
     RecipeListItem.create!(recipe: recipe, recipe_list: recipe_list)
 
     login_as(user, scope: :user)

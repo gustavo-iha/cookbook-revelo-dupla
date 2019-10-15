@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'Visitor' do
-
   scenario 'cannot see pending recipes via url' do
     visit pending_recipes_path
 

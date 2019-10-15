@@ -7,16 +7,16 @@ feature 'Admin' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
     pending_recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :pending)
-    
+                                   recipe_type: recipe_type, cuisine: 'Brasileira',
+                                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                   user: user, status: :pending)
+
     approved_recipe = Recipe.create(title: 'Bolo de chocolate', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :approved)
+                                    recipe_type: recipe_type, cuisine: 'Brasileira',
+                                    cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                    cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                    user: user, status: :approved)
 
     login_as(admin, scope: :user)
     visit root_path
@@ -33,16 +33,16 @@ feature 'Admin' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
     pending_recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :pending)
-    
+                                   recipe_type: recipe_type, cuisine: 'Brasileira',
+                                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                   user: user, status: :pending)
+
     another_pending_recipe = Recipe.create(title: 'Bolo de chocolate', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :pending)
+                                           recipe_type: recipe_type, cuisine: 'Brasileira',
+                                           cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                           user: user, status: :pending)
 
     login_as(admin, scope: :user)
     visit root_path
@@ -66,16 +66,16 @@ feature 'Admin' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
     pending_recipe = Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :pending)
-    
+                                   recipe_type: recipe_type, cuisine: 'Brasileira',
+                                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                   cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                   user: user, status: :pending)
+
     another_pending_recipe = Recipe.create(title: 'Bolo de chocolate', difficulty: 'Médio',
-                  recipe_type: recipe_type, cuisine: 'Brasileira',
-                  cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
-                  user: user, status: :pending)
+                                           recipe_type: recipe_type, cuisine: 'Brasileira',
+                                           cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
+                                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                                           user: user, status: :pending)
 
     login_as(admin, scope: :user)
     visit root_path
